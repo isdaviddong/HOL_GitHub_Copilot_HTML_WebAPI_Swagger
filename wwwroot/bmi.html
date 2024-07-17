@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+
+<head>
+    <title>BMI</title>
+    <!-- 引用 bootstrap 的 CSS 檔 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- 引用jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- 引用 bootstrap 的 JS 檔 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        //檢查身高體重是否為數字
+        function checkNUM() {
+            var weight = document.getElementById("weight").value;
+            var height = document.getElementById("height").value;
+            if (isNaN(weight) || isNaN(height)) {
+                alert("請輸入數字");
+                return false;
+            }
+        }
+        //檢查身高體重是否為合理範圍
+        function checkRange() {
+            var weight = document.getElementById("weight").value;
+            var height = document.getElementById("height").value;
+            if (weight < 20 || weight > 200 || height < 100 || height > 250) {
+                alert("請輸入合理範圍");
+                return false;
+            }
+        }
+        //jQuery onload
+        $(document).ready(function () {
+            //按下Cal按鈕時，呼叫checkNUM()與checkRange()檢查身高體重是否為數字與合理範圍
+            $("#Cal").click(function () {
+                if (checkNUM() == false || checkRange() == false) {
+                    return false;
+                }
+                //顯示身高體重與bmi
+                var weight = $("#weight").val();
+                var height = $("#height").val();
+                var bmi = (weight / ((height / 100) * (height / 100))).toFixed(2);
+                alert("身高：" + height + "公分\n體重：" + weight + "公斤\nBMI：" + bmi);
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="display-4">BMI 計算器</h1>
+        <form action="bmi.php" method="post">
+            <div class="form-group">
+                <label for="weight">體重 (公斤):</label>
+                <input type="text" class="form-control" name="weight" id="weight" required>
+            </div>
+            <div class="form-group">
+                <label for="height">身高 (公分):</label>
+                <input type="text" class="form-control" name="height" id="height" required>
+            </div>
+            <input type="button" class="btn btn-primary" id="Cal" value="計算">
+        </form>
+</body>
+
+</html>
